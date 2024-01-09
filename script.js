@@ -45,6 +45,17 @@ function getMealById(mealID){
     })
 }
 
+function randomMeal(){
+  mealsEl.innerHTML = ``
+  resultHeading.innerHTML = ``
+  fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+    .then(res => res.json())
+    .then(data => {
+      const meal = data.meals[0]
+      addMealToDom(meal)
+    })
+}
+
 function addMealToDom(meal){
   const ingredients = []
   for(let i = 1; i<=20; i++){
@@ -75,6 +86,7 @@ function addMealToDom(meal){
 
 // events
 submit.addEventListener('submit',searchMeal)
+random.addEventListener('click',randomMeal)
 mealsEl.addEventListener('click', e => {
   const mealID = e.target.closest('.meal-info').dataset.mealid;
   getMealById(mealID);
